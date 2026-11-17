@@ -1,0 +1,47 @@
+#!/bin/bash
+#PBS -N heat2d_bench
+#PBS -q auto_free
+# >>> Edit ncpus/mpiprocs together (and mem) for the node size you are allowed. The script adapts to whatever it gets.
+#PBS -l select=1:ncpus=16:mpiprocs=16:ompthreads=1:mem=32gb
+#PBS -l walltime=01:30:00
+#PBS -j oe
+
+set -eo pipefail
+cd "$PBS_O_WORKDIR"
+mkdir -p results
+
+if ! type module >/dev/null 2>&1 && [ -f /etc/profile.d/modules.sh ]; then source /etc/profile.d/modules.sh; fi
+module load gcc/13.1.0
+module load mpich/ge/gcc/64/4.1.1
+export PATH="/cm/shared/apps/mpich/ge/gcc/64/4.1.1/bin:$PATH"
+
+# Single-node run: shared-memory transport is used; FI_PROVIDER only matters if you go multi-node.
+export FI_PROVIDER=${FI_PROVIDER:-tcp}
+export FI_LOG_LEVEL=error
+export OMP_DYNAMIC=FALSE            # OMP_PLACES / OMP_PROC_BIND are set per rank by bind_run.sh
+
+TAG="${PBS_JOBID//[^a-zA-Z0-9_.-]/_}"
+echo "=== environment ==="; echo "Job $PBS_JOBID on $(hostname), $(date)"
+module list 2>&1; command -v mpirun; mpirun --version | head -2
+lscpu | grep -E 'Model name|Socket|Core|Thread|NUMA|L2|L3' || true
+echo "allowed CPUs: $(taskset -pc $$)"; echo "affinity count: $(python3 -c 'import os;print(len(os.sched_getaffinity(0)))')  (nproc prints $(nproc) because OMP_NUM_THREADS=$OMP_NUM_THREADS)"
+
+# Build on the compute node with the same toolchain used for the runs.
+make clean && make
+[ -x ./heat2d ] || { echo "heat2d missing"; exit 1; }
+
+# 1) correctness first (writes results/validation.csv)
+MPIRUN=mpirun bash run_validation.sh || echo "WARNING: validation failures, see results/validation.csv"
+cp results/validation.csv "results/validation_${TAG}.csv"
+
+# 2) performance experiments
+# Sizes chosen so the working set (2 arrays) is far larger than cache: 8192^2*8B*2 = 1 GB; weak base 2048^2 = 64 MB per core.
+export N_STRONG=${N_STRONG:-8192} N_WEAK_BASE=${N_WEAK_BASE:-2048} STEPS=${STEPS:-100} REPS=${REPS:-5}
+export NCORES=$(python3 -c "import os;print(len(os.sched_getaffinity(0)))") BIND=1 TAG="$TAG"
+echo "NCORES=$NCORES"
+[ "$NCORES" -ge 2 ] || { echo "ERROR: only $NCORES core visible; check select= line"; exit 1; }
+bash run_benchmarks.sh
+
+# 3) one-line affinity proof for the report (4 ranks x 2 threads)
+mpirun -np 4 ./bind_run.sh 2 ./heat2d --mode hybrid --n 256 --steps 1 --affinity > "results/affinity_${TAG}.txt" 2>&1 || true
+echo "finished $(date)"
