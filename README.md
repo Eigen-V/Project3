@@ -1,5 +1,4 @@
-# DSA5208 — Scalable Distributed Computing for Data Science
-## Project 3: Parallel 2D Heat Equation Solver
+## Project 3: Parallel 2D Heat Diffusion Algorithm 
 
 ### 1. Project Overview
 
