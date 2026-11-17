@@ -1,0 +1,38 @@
+libfabric:1220529:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma0: there are no active ports
+libfabric:1220530:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma0: there are no active ports
+libfabric:1220530:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma0: there are no active ports
+libfabric:1220529:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma0: there are no active ports
+libfabric:1220529:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma1: there are no active ports
+libfabric:1220529:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma1: there are no active ports
+libfabric:1220529:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma3: there are no active ports
+libfabric:1220529:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma3: there are no active ports
+libfabric:1220530:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma1: there are no active ports
+libfabric:1220529:1794739404::ofi_rxm:av:util_verify_av_attr():511<warn> Shared AV is unsupported
+libfabric:1220530:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma1: there are no active ports
+libfabric:1220530:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma3: there are no active ports
+libfabric:1220530:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma3: there are no active ports
+libfabric:1220530:1794739404::ofi_rxm:av:util_verify_av_attr():511<warn> Shared AV is unsupported
+libfabric:1220531:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma0: there are no active ports
+libfabric:1220531:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma0: there are no active ports
+libfabric:1220531:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma1: there are no active ports
+libfabric:1220531:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma1: there are no active ports
+libfabric:1220531:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma3: there are no active ports
+libfabric:1220531:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma3: there are no active ports
+libfabric:1220531:1794739404::ofi_rxm:av:util_verify_av_attr():511<warn> Shared AV is unsupported
+libfabric:1220528:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma0: there are no active ports
+libfabric:1220528:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma0: there are no active ports
+libfabric:1220528:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma1: there are no active ports
+libfabric:1220528:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma1: there are no active ports
+libfabric:1220528:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma3: there are no active ports
+libfabric:1220528:1794739404::verbs:fabric:vrb_get_device_attrs():614<warn> device irdma3: there are no active ports
+libfabric:1220528:1794739404::ofi_rxm:av:util_verify_av_attr():511<warn> Shared AV is unsupported
+affinity rank=affinity rank=1 thread=0 cpu=7 host=IN-002
+affinity rank=1 thread=1 cpu=9 host=IN-002
+affinity rank=2 thread=1 cpu=15 host=IN-002
+affinity rank=2 thread=0 cpu=13 host=IN-002
+affinity rank=3 thread=0 cpu=17 host=IN-002
+affinity rank=3 thread=1 cpu=19 host=IN-002
+0 thread=0 cpu=3 host=IN-002
+affinity rank=0 thread=1 cpu=5 host=IN-002
+mode,decomp,init,n,steps,r,ranks,px,py,threads,seconds,comm_max,compute_max,checksum,halo_doubles_max,mcups,gflops,linf,rel_l2,analytic_err,valid
+hybrid,cart,gauss,256,1,0.2,4,2,2,2,7.83249997767e-05,6.79019999552e-05,1.00930001281e-05,2553.52577712,256,823.696140236,5.76587298165,-1,-1,-1,-1
